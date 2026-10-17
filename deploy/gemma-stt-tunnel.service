@@ -1,0 +1,17 @@
+[Unit]
+Description=Cloudflared Tunnel for Gemma Long Test App (Persistent Public URL)
+After=network-online.target gemma-stt.service
+Wants=network-online.target
+
+[Service]
+Type=notify
+User=vpa
+Group=vpa
+ExecStart=/home/vpa/.local/bin/cloudflared tunnel --config /home/vpa/.cloudflared/gemma-stt.yml run
+Restart=on-failure
+RestartSec=5
+StartLimitInterval=60s
+StartLimitBurst=3
+
+[Install]
+WantedBy=multi-user.target

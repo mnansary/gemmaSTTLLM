@@ -1,0 +1,7 @@
+[Unit]
+Description=Gemma Long Test App — Backend + Tunnel
+Wants=gemma-stt.service gemma-stt-tunnel.service
+After=network-online.target
+
+[Install]
+WantedBy=multi-user.target

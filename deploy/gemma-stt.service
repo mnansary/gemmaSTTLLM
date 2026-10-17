@@ -1,0 +1,29 @@
+[Unit]
+Description=Gemma Long Test App Backend (API + UI)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+User=vpa
+Group=vpa
+WorkingDirectory=/home/vpa/gemma_quant/backend
+
+Environment="PATH=/home/vpa/gemma_quant/backend/.venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="GEMMA_HOST=0.0.0.0"
+Environment="GEMMA_PORT=9000"
+Environment="GEMMA_VLLM_URL=http://localhost:5000"
+Environment="PYTHONUNBUFFERED=1"
+
+ExecStart=/home/vpa/gemma_quant/backend/.venv/bin/python -m gemma_stt.main
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+KillSignal=SIGTERM
+
+Restart=on-failure
+RestartSec=5
+StartLimitInterval=60s
+StartLimitBurst=3
+
+[Install]
+WantedBy=multi-user.target
